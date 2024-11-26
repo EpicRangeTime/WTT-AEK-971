@@ -1,0 +1,294 @@
+{
+	"0cb4a36dd2e587b46e813dbe": {
+		"itemTplToClone": "5ac4cd105acfc40016339859",
+		"parentId": "5447b5f14bdc2d61278b4567",
+		"handbookParentId": "5b5f78fc86f77409407a7f90",
+		"overrideProperties": {
+			"ExaminedByDefault": false,
+			"Prefab": {
+				"path": "Weapons/weapon_aek971.bundle",
+				"rcid": ""
+			},
+			"bFirerate": 900,
+			"SingleFireRate": 450,
+			"Ergonomics": 43,
+			"RecoilForceBack": 247,
+			"RecoilForceUp": 82,
+			"HeatfactorByShot": 1.37,
+			"Slots": [
+				{
+					"_name": "mod_launcher",
+					"_id": "d620c0b10826355b9de23c63",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"62e7e7bbe6da9612f743f1e0"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				},
+				{
+					"_name": "mod_muzzle",
+					"_id": "04c37c9f1c0ee6b5f0cf14c9",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"5fef472e70dc85c1e6fb9e23",
+									"3777aadf41ebb6d92d108931"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				},
+				{
+					"_name": "mod_sight_rear",
+					"_id": "63c388a62e825d20b87ed7a7",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"5ac733a45acfc400192630e2",
+									"5649b0544bdc2d1b2b8b458a",
+									"5ac72e475acfc400180ae6fe",
+									"628a7b23b0f75035732dd565",
+									"5649d9a14bdc2d79388b4580",
+									"5bf3f59f0db834001a6fa060",
+									"649ec2cec93611967b03495e"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				},
+				{
+					"_name": "mod_stock",
+					"_id": "b6efdbe87343f0ebd5270dc2",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"c9dc0b769bd36d06524b9bde"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				},
+				{
+					"_name": "mod_magazine",
+					"_id": "25c15334d22715a223fe77d1",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"AnimationIndex": -1,
+								"Filter": [
+									"564ca9df4bdc2d35148b4569",
+									"564ca99c4bdc2d16268b4589",
+									"55d480c04bdc2d1d4e8b456a",
+									"5cbdaf89ae9215000e5b9c94",
+									"55d481904bdc2d8c2f8b456a",
+									"55d482194bdc2d1d4e8b456b",
+									"55d4837c4bdc2d1d4e8b456c",
+									"5aaa4194e5b5b055d06310a5",
+									"5bed61680db834001d2c45ab",
+									"5bed625c0db834001c062946",
+									"649ec30cb013f04a700e60fb",
+									"64b9e265c94d0d15c5027e35"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c394bdc2dae468b4577"
+				},
+				{
+					"_name": "mod_mount_000",
+					"_id": "e2500bf55908185ccf727051",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"5947db3f86f77447880cf76f",
+									"6113d6c3290d254f5e6b27db",
+									"57486e672459770abd687134",
+									"618a5d5852ecee1505530b2a",
+									"5cf638cbd7f00c06595bc936",
+									"5a7c74b3e899ef0014332c29",
+									"591ee00d86f774592f7b841e",
+									"618a75c9a3884f56c957ca1b",
+									"57acb6222459771ec34b5cb0",
+									"5c61a40d2e2216001403158d",
+									"5c90c3622e221601da359851",
+									"6544d4187c5457729210d277"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				},
+				{
+					"_name": "mod_charge",
+					"_id": "bd7e859e1f6536ebbc179b0e",
+					"_parent": "0cb4a36dd2e587b46e813dbe",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"6130ca3fd92c473c77020dbd",
+									"5648ac824bdc2ded0b8b457d"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
+				}
+			],
+			"Weight": 2.9,
+			"weapFireType": [
+				"single",
+				"burst",
+				"fullauto"
+			]
+		},
+		"locales": {
+			"en": {
+				"name": "Kovrov AEK-971 5.45x39 assault rifle",
+				"shortName": "AEK-971",
+				"description": "The AEK-971 (Russian: Автомат единый Кокшарова 971, Automatic (rifle), Universal, (of) Koksharov, 971) is a selective fire 5.45×39mm assault rifle that was developed at the Kovrov Mechanical Plant (KMZ) by chief designer Stanislav Ivanovich Koksharov (Cyrilic: Станислав Иванович Кокшаров), also known as Sergey Koksharov, in the late 1970s and 1980s (currently manufactured by Degtyarev Plant)."
+			}
+		},
+		"clearClonedProps": false,
+		"addtoInventorySlots": [],
+		"addtoModSlots": false,
+		"modSlot": [],
+		"ModdableItemWhitelist": [],
+		"ModdableItemBlacklist": [],
+		"fleaPriceRoubles": 377000,
+		"handbookPriceRoubles": 86000,
+		"addtoTraders": false,
+		"traderId": "PRAPOR",
+		"traderItems": [
+			{
+				"unlimitedCount": true,
+				"stackObjectsCount": 99
+			}
+		],
+		"barterScheme": [
+			{
+				"count": 176000,
+				"_tpl": "ROUBLES"
+			}
+		],
+		"loyallevelitems": 4,
+		"addtoBots": false,
+		"addtostaticlootcontainer": false,
+		"StaticLootContainers": [
+			{
+				"ContainerName": "LOOTCONTAINER_WEAPON_BOX_4X4",
+				"Probability": 250
+			},
+			{
+				"ContainerName": "LOOTCONTAINER_DEAD_SCAV",
+				"Probability": 150
+			}
+		],
+		"masteries": true,
+		"masterySections": [
+			{
+				"Name": "AK74",
+				"Templates": [
+					"0cb4a36dd2e587b46e813dbe"
+				]
+			}
+		],
+		"addweaponpreset": false,
+		"weaponpresets": [
+			{
+				"_changeWeaponName": false,
+				"_encyclopedia": "deee28079e76d537f532021c",
+				"_id": "66a015997e1b32066fb37286",
+				"_items": [
+					{
+						"_id": "66a0158c9ffc1c49ba455c7a",
+						"_tpl": "deee28079e76d537f532021c",
+						"upd": {
+							"Repairable": {
+								"MaxDurability": 100,
+								"Durability": 100
+							}
+						}
+					},
+					{
+						"_id": "66a01603c8a3c8213858a862",
+						"_tpl": "277727478d7eb1da0e5b3354",
+						"parentId": "66a0158c9ffc1c49ba455c7a",
+						"slotId": "mod_barrel"
+					},
+					{
+						"_id": "66a015f5d8803a8a6d138728",
+						"_tpl": "5aa66a9be5b5b0214e506e89",
+						"parentId": "66a0158c9ffc1c49ba455c7a",
+						"slotId": "mod_scope"
+					},
+					{
+						"_id": "66a016004f96526cb4068150",
+						"_tpl": "62850c28da09541f43158cca",
+						"parentId": "66a015f5d8803a8a6d138728",
+						"slotId": "mod_scope"
+					},
+					{
+						"_id": "66a016142e0f29858b22d5f0",
+						"_tpl": "8c0343f717834fd6d4825a58",
+						"parentId": "66a01603c8a3c8213858a862",
+						"slotId": "mod_muzzle"
+					},
+					{
+						"_id": "66a0161fa4e66bdc1f0b6d73",
+						"_tpl": "f1b1a0db4986e718711a8e80",
+						"parentId": "66a0158c9ffc1c49ba455c7a",
+						"slotId": "mod_magazine"
+					},
+					{
+						"_id": "66a016112fe7888bea23a9d7",
+						"_tpl": "356e3ea40ac16f18c938ac53",
+						"parentId": "66a0158c9ffc1c49ba455c7a",
+						"slotId": "mod_stock"
+					}
+				],
+				"_name": "Surgeon 1086",
+				"_parent": "66a0158c9ffc1c49ba455c7a",
+				"_type": "Preset"
+			}
+		]
+	}
+}

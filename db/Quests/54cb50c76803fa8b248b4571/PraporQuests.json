@@ -1,0 +1,236 @@
+{
+  "67440413f4f628d8f8195a1d": {
+    "QuestName": "A Weapon to Die For",
+    "_id": "67440413f4f628d8f8195a1d",
+    "traderId": "54cb50c76803fa8b248b4571",
+    "type": "Elimination",
+    "location": "any",
+    "image": "/files/quest/icon/5d69468a86f77452aa51d79d.png",
+    "instantComplete": false,
+    "isKey": false,
+    "secretQuest": false,
+    "side": "Pmc",
+    "sideExclusive": "Pmc",
+    "description": "67440413f4f628d8f8195a1d description",
+    "startedMessageText": "67440413f4f628d8f8195a1d startedMessageText",
+    "successMessageText": "67440413f4f628d8f8195a1d successMessageText",
+    "failMessageText": "67440413f4f628d8f8195a1d failMessageText",
+    "acceptPlayerMessage": "67440413f4f628d8f8195a1d acceptPlayerMessage",
+    "declinePlayerMessage": "67440413f4f628d8f8195a1d declinePlayerMessage",
+    "completePlayerMessage": "67440413f4f628d8f8195a1d completePlayerMessage",
+    "changeQuestMessageText": "67440413f4f628d8f8195a1d changeQuestMessageText",
+    "name": "67440413f4f628d8f8195a1d name",
+    "note": "67440413f4f628d8f8195a1d note",
+    "restartable": false,
+    "canShowNotificationsInGame": true,
+    "conditions": {
+      "AvailableForFinish": [
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [
+                  ""
+                ],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "6744041325f9dad32221b768",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossTagilla"
+                ],
+                "target": "Savage",
+                "value": 1,
+                "weapon": [
+                  "5447b5f14bdc2d61278b4567"
+                ],
+                "weaponCaliber": [],
+                "weaponModsInclusive": [],
+                "weaponModsExclusive": [],
+                "equipmentInclusive": [],
+                "equipmentExclusive": []
+              }
+            ],
+            "id": "674404137b813d8cae746194"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "67440413388afc449ba6ed6c",
+          "index": 0,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [
+                  ""
+                ],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "6744041328281b4fb3c9c570",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossKilla"
+                ],
+                "target": "Savage",
+                "value": 1,
+                "weapon": [
+                  "5447b5f14bdc2d61278b4567"
+                ],
+                "weaponCaliber": [],
+                "weaponModsInclusive": [],
+                "weaponModsExclusive": [],
+                "equipmentInclusive": [],
+                "equipmentExclusive": []
+              }
+            ],
+            "id": "674404135cfeabfbfe1c8c68"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "67440413d46c68341345b929",
+          "index": 1,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "conditionType": "HandoverItem",
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "674402e89737d3e29b3bcedb",
+          "index": 2,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "target": [
+            "61962b617c6c7b169525f168"
+          ],
+          "value": 300,
+          "visibilityConditions": [
+            {
+              "conditionType": "CompleteCondition",
+              "id": "67440413602c0176b339105b",
+              "target": "67440032f3edda5475f911a4"
+            }
+          ]
+        },
+        {
+          "conditionType": "HandoverItem",
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "674402e981b32bf5fd65a049",
+          "index": 3,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "target": [
+            "55d482194bdc2d1d4e8b456b"
+          ],
+          "value": 10,
+          "visibilityConditions": [
+            {
+              "conditionType": "CompleteCondition",
+              "id": "674404139c4079bffb2c7780",
+              "target": "67440032f3edda5475f911a4"
+            }
+          ]
+        }
+      ],
+      "AvailableForStart": [
+        {
+          "compareMethod": ">=",
+          "conditionType": "Level",
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "674404135473e5474bea101a",
+          "index": 0,
+          "parentId": "",
+          "value": 48,
+          "visibilityConditions": []
+        },
+        {
+          "availableAfter": 0,
+          "conditionType": "Quest",
+          "dispersion": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "67440413fb071ee9c2d2dded",
+          "index": 1,
+          "parentId": "",
+          "status": [
+            4
+          ],
+          "target": "63a9ae24009ffc6a551631a5",
+          "visibilityConditions": []
+        }
+      ],
+      "Fail": []
+    },
+    "rewards": {
+      "Fail": [],
+      "Started": [],
+      "Success": [
+        {
+          "availableInGameEditions": [],
+          "id": "67440413eb96b1fd69b3db0f",
+          "index": 0,
+          "items": [
+            {
+              "_id": "40b6488e7ef8e549d9a43449",
+              "_tpl": "0cb4a36dd2e587b46e813dbe"
+            }
+          ],
+          "loyaltyLevel": 4,
+          "target": "40b6488e7ef8e549d9a43449",
+          "traderId": "54cb50c76803fa8b248b4571",
+          "type": "AssortmentUnlock",
+          "unknown": true
+        }
+      ]
+    }
+  }
+}
