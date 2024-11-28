@@ -10,6 +10,7 @@
 				"rcid": ""
 			},
 			"bFirerate": 900,
+			"CanSellOnRagfair": false,
 			"SingleFireRate": 450,
 			"Ergonomics": 43,
 			"RecoilForceBack": 247,

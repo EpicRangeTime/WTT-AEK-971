@@ -1,19 +1,25 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import type { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
-import type { JsonUtil } from "@spt/utils/JsonUtil";
+import type { WTTInstanceManager } from "./WTTInstanceManager";
 
 export class QuestModifier {
 
+    private instanceManager: WTTInstanceManager;
+    public preSptLoad(Instance: WTTInstanceManager): void
+    {
+        this.instanceManager = Instance;
+    }
+
+    public postDBLoad(): void
+    {
+        this.modifyQuests();
+    }
     // Helper method to update items in all AvailableForFinish conditions
     private updateItemsInAllAvailableForFinish(
         questID: string,
         items: string[] | string[][],
-        type: 'weapon' | 'weaponModsInclusive' | 'weaponModsExclusive',
-        tables: IDatabaseTables,
-        jsonUtil: JsonUtil,
-        debug: boolean
+        type: 'weapon' | 'weaponModsInclusive' | 'weaponModsExclusive'
     ): void {
-        const quest = tables.templates.quests[questID];
+        const quest = this.instanceManager.database.templates.quests[questID];
         if (quest) {
             try {
                 const availableForFinish = quest.conditions.AvailableForFinish;
@@ -23,7 +29,7 @@ export class QuestModifier {
                     const conditions = conditionGroup.counter.conditions[0];
                     
                     if (type === 'weapon') {
-                        const existingWeapons = jsonUtil.clone(conditions.weapon || []);
+                        const existingWeapons = this.instanceManager.jsonUtil.clone(conditions.weapon || []);
                         const updatedWeapons = new Set(existingWeapons);
 
                         for (const weapon of items as string[]) {
@@ -31,22 +37,22 @@ export class QuestModifier {
                                 updatedWeapons.add(weapon);
                                 modified = true;
 
-                                if (debug) {
+                                if (this.instanceManager.debug) {
                                     console.log(`Added new weapon ${weapon} to AvailableForFinish condition in quest ${questID}`);
                                 }
-                            } else if (debug) {
+                            } else if (this.instanceManager.debug) {
                                 console.log(`AvailableForFinish condition in quest ${questID} already has the weapon ${weapon}`);
                             }
                         }
 
                         if (modified) {
                             conditions.weapon = Array.from(updatedWeapons);
-                            if (debug) {
+                            if (this.instanceManager.debug) {
                                 console.log(`Modified AvailableForFinish conditions in quest ${questID}:`, conditions.weapon);
                             }
                         }
                     } else if (type === 'weaponModsInclusive' || type === 'weaponModsExclusive') {
-                        const existingWeaponModsInclusive = jsonUtil.clone(conditions.weaponModsInclusive || []);
+                        const existingWeaponModsInclusive = this.instanceManager.jsonUtil.clone(conditions.weaponModsInclusive || []);
                         const updatedWeaponModsInclusive = new Set(existingWeaponModsInclusive.flat());
 
                         for (const weaponModArray of items as string[][]) {
@@ -55,10 +61,10 @@ export class QuestModifier {
                                     updatedWeaponModsInclusive.add(weaponMod);
                                     modified = true;
 
-                                    if (debug) {
+                                    if (this.instanceManager.debug) {
                                         console.log(`Added new weapon mod ${weaponMod} to AvailableForFinish condition in quest ${questID}`);
                                     }
-                                } else if (debug) {
+                                } else if (this.instanceManager.debug) {
                                     console.log(`AvailableForFinish condition in quest ${questID} already has the weapon mod ${weaponMod}`);
                                 }
                             }
@@ -66,7 +72,7 @@ export class QuestModifier {
 
                         if (modified) {
                             conditions.weaponModsInclusive = Array.from(updatedWeaponModsInclusive).map(mod => [mod]);
-                            if (debug) {
+                            if (this.instanceManager.debug) {
                                 console.log(`Modified AvailableForFinish conditions in quest ${questID}:`, conditions.weaponModsInclusive);
                             }
                         }
@@ -86,40 +92,28 @@ export class QuestModifier {
         questID: string,
         items: string[] | string[][],
         type: 'weapon' | 'weaponModsInclusive' | 'weaponModsExclusive',
-        tables: IDatabaseTables,
-        jsonUtil: JsonUtil,
         pushToAllAvailableForFinish: boolean,
-        debug: boolean,
         availableForFinishIndex = 0 // New parameter to specify the index
     ): void {
         if (pushToAllAvailableForFinish) {
             this.updateItemsInAllAvailableForFinish(
                 questID,
                 items,
-                type,
-                tables,
-                jsonUtil,
-                debug
+                type
             );
         } else {
-            const quest = tables.templates.quests[questID];
+            const quest = this.instanceManager.database.templates.quests[questID];
             if (quest) {
                 if (type === 'weapon') {
                     this.updateQuestWeapons(
                         questID,
                         items as string[],
-                        tables,
-                        jsonUtil,
-                        debug,
                         availableForFinishIndex // Pass the index to the helper method
                     );
                 } else if (type === 'weaponModsInclusive' || type === 'weaponModsExclusive') {
                     this.updateQuestWeaponMods(
                         questID,
                         items as string[][],
-                        tables,
-                        jsonUtil,
-                        debug,
                         availableForFinishIndex // Pass the index to the helper method
                     );
                 }
@@ -134,18 +128,15 @@ export class QuestModifier {
     private updateQuestWeapons(
         questID: string,
         weapons: string[],
-        tables: IDatabaseTables,
-        jsonUtil: JsonUtil,
-        debug: boolean,
         availableForFinishIndex = 0// New parameter to specify the index
     ): void {
-        const quest = tables.templates.quests[questID];
+        const quest = this.instanceManager.database.templates.quests[questID];
         if (quest) {
             try {
                 // Extract existing weapons based on the specified index
                 const existingWeapons = quest.conditions.AvailableForFinish[availableForFinishIndex].counter.conditions[0].weapon;
                 // Clone the existing weapons array
-                const updatedWeapons = jsonUtil.clone(existingWeapons);
+                const updatedWeapons = this.instanceManager.jsonUtil.clone(existingWeapons);
                 let modified = false;
     
                 // Add new weapons if they do not already exist
@@ -154,10 +145,10 @@ export class QuestModifier {
                         updatedWeapons.push(weapon);
                         modified = true;
     
-                        if (debug) {
+                        if (this.instanceManager.debug) {
                             console.log(`Added new weapon ${weapon} to quest ${questID}`);
                         }
-                    } else if (debug) {
+                    } else if (this.instanceManager.debug) {
                         console.log(`Quest ${questID} already has the weapon ${weapon}`);
                     }
                 }
@@ -166,7 +157,7 @@ export class QuestModifier {
                 if (modified) {
                     quest.conditions.AvailableForFinish[availableForFinishIndex].counter.conditions[0].weapon = updatedWeapons;
     
-                    if (debug) {
+                    if (this.instanceManager.debug) {
                         console.log(`Modified quest ${questID}:`, updatedWeapons);
                     }
                 }
@@ -183,12 +174,9 @@ export class QuestModifier {
     private updateQuestWeaponMods(
         questID: string,
         weaponModsInclusive: string[][],
-        tables: IDatabaseTables,
-        jsonUtil: JsonUtil,
-        debug: boolean,
         availableForFinishIndex = 0 // New parameter to specify the index
     ): void {
-        const quest = tables.templates.quests[questID];
+        const quest = this.instanceManager.database.templates.quests[questID];
         if (quest) {
             try {
                 // Extract existing weapon mods inclusive based on the specified index
@@ -200,7 +188,7 @@ export class QuestModifier {
 
                 const existingWeaponModsInclusive = availableForFinish[availableForFinishIndex].counter.conditions[0].weaponModsInclusive;
                 // Clone the existing weapon mods inclusive array
-                const updatedWeaponModsInclusive = jsonUtil.clone(existingWeaponModsInclusive);
+                const updatedWeaponModsInclusive = this.instanceManager.jsonUtil.clone(existingWeaponModsInclusive);
                 let modified = false;
 
                 // Add new weapon mods if they do not already exist
@@ -210,10 +198,10 @@ export class QuestModifier {
                             updatedWeaponModsInclusive.push(weaponModArray);
                             modified = true;
 
-                            if (debug) {
+                            if (this.instanceManager.debug) {
                                 console.log(`Added new weapon mod ${weaponMod} to quest ${questID}`);
                             }
-                        } else if (debug) {
+                        } else if (this.instanceManager.debug) {
                             console.log(`Quest ${questID} already has the weapon mod ${weaponMod}`);
                         }
                     }
@@ -223,7 +211,7 @@ export class QuestModifier {
                 if (modified) {
                     availableForFinish[availableForFinishIndex].counter.conditions[0].weaponModsInclusive = updatedWeaponModsInclusive;
 
-                    if (debug) {
+                    if (this.instanceManager.debug) {
                         console.log(`Modified quest ${questID}:`, updatedWeaponModsInclusive);
                     }
                 }
@@ -237,7 +225,7 @@ export class QuestModifier {
     
 
     // Method to modify quests with specific items and updates
-    public modifyQuests(tables: IDatabaseTables, jsonUtil: JsonUtil, debug: boolean): void {
+    public modifyQuests(): void {
         // Define new items
         const newAKs = [
             "0cb4a36dd2e587b46e813dbe"
@@ -251,25 +239,19 @@ export class QuestModifier {
             "61e6e60223374d168a4576a6", // Compensation for damage - wager
             newAKs,
             'weapon',
-            tables,
-            jsonUtil,
             false,
-            debug,
             0
         );
         this.updateQuestData(
             "64e7b9bffd30422ed03dad38", // Gendarmerie district patrol
             newCarbinesandAssaultRifles,
             'weapon',
-            tables,
-            jsonUtil,
             false,
-            debug,
             0
         );
 
         // Debug output
-        if (debug) {
+        if (this.instanceManager.debug) {
             console.log('Updated quests with new items.');
         }
     }

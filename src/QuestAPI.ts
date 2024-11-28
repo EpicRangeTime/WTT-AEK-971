@@ -10,7 +10,7 @@ import type { WTTInstanceManager } from "./WTTInstanceManager";
 export class QuestAPI 
 {
     private instanceManager: WTTInstanceManager;
-
+    private dbPath: string;
     /**
      * Call inside traders preSptLoad method.
      * 
@@ -37,8 +37,8 @@ export class QuestAPI
 
     /**
      * Loads all quest files from disk.
-     * \user\mods\WelcomeToTarkov\db\quests\{trader}
-     * \user\mods\WelcomeToTarkov\db\quests\{trader}\locales
+     * \user\mods\(modname)\db\quests\{trader}
+     * \user\mods\(modname)\db\quests\{trader}\locales
      * 
      * @param {string} trader     Trader to load quests for.
      * @return {any[]}            Returns an array of parsed json objects
@@ -46,9 +46,11 @@ export class QuestAPI
     public loadQuestsFromDirectory(trader: string): void
     {
         const jsonQuestFiles: any[] = [];
+        const jsonQuestAssortFiles: any[] = [];
         const jsonLocaleFiles: any[] = [];
         const jsonImageFiles: any[] = [];
         const questFiles = fs.readdirSync(this.instanceManager.dbPath.concat(`\\Quests\\${trader}\\`));
+        const questAssortFiles = fs.readdirSync(this.instanceManager.dbPath.concat(`\\Quests\\${trader}\\questAssort`));
         const questLocalesFiles = fs.readdirSync(this.instanceManager.dbPath.concat(`\\Quests\\${trader}\\locales`));
         const questImageFiles = fs.readdirSync(this.instanceManager.dbPath.concat(`\\Quests\\${trader}\\images`));
 
@@ -93,6 +95,33 @@ export class QuestAPI
             }      
         }
         
+        for (const assort of questAssortFiles)
+        {
+            const filePath = path.join(this.instanceManager.dbPath.concat(`\\Quests\\${trader}\\questAssort`), assort);
+            const itemStats = fs.lstatSync(filePath);
+            let fileContent: any;
+
+            if (itemStats.isFile()) 
+            {
+                fileContent = fs.readFileSync(filePath, "utf-8");
+
+                try 
+                {
+                    const jsonData = JSON.parse(fileContent);
+                    jsonQuestAssortFiles.push(jsonData);
+                } 
+                catch (error) 
+                {
+                    console.error(`Error parsing JSON from file ${filePath}: ${error}`);
+                }
+            }          
+            
+            if (this.instanceManager.debug)
+            {
+                console.log(`Trader: ${trader} quest file path:`)
+                console.log(filePath);
+            }      
+        }
         // Load locale data from disk
         for (const locale of questLocalesFiles)
         {
@@ -141,6 +170,7 @@ export class QuestAPI
         }
         
         this.importQuestData(jsonQuestFiles, trader);
+        this.importQuestAssortData(jsonQuestAssortFiles, trader);
         this.importLocaleData(jsonLocaleFiles, trader);
         this.importImageData(jsonImageFiles, trader);
     }
@@ -191,6 +221,36 @@ export class QuestAPI
             }           
         }
         this.instanceManager.logger.log(`[${this.instanceManager.modName}] QuestAPI:  ${trader} Loaded ${questCount} tasks.`, LogTextColor.GREEN);      
+    }
+
+    private importQuestAssortData(jsonQuestAssortFiles: any[], trader: string): void {
+        if (Object.keys(jsonQuestAssortFiles).length < 1) {
+            this.instanceManager.logger.log(`[${this.instanceManager.modName}] QuestAPI:  ${trader} No quest files.`, LogTextColor.RED);
+            return;
+        }
+        this.instanceManager.logger.log(`[${this.instanceManager.modName}] QuestAPI:  ${trader} Loading ${Object.keys(jsonQuestAssortFiles).length} quest assort files.`, LogTextColor.GREEN);
+    
+        let questAssortCount = 0;
+    
+        for (const questAssorts of jsonQuestAssortFiles) {
+            for (const questAssortKey in questAssorts) {
+                // Merge "started", "success", and "fail" sections individually
+                const section = questAssorts[questAssortKey];
+                if (!this.instanceManager.database.traders[trader].questassort[questAssortKey]) {
+                    this.instanceManager.database.traders[trader].questassort[questAssortKey] = {};
+                }
+    
+                Object.assign(
+                    this.instanceManager.database.traders[trader].questassort[questAssortKey],
+                    section
+                );
+    
+                // Update quest count
+                questAssortCount += Object.keys(section).length;
+            }
+        }
+    
+        this.instanceManager.logger.log(`[${this.instanceManager.modName}] QuestAPI: ${trader} Imported ${questAssortCount} quests into the database.`, LogTextColor.GREEN);
     }
 
     /**

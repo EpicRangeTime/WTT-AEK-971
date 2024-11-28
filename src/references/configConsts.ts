@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-export interface CombinedConfigItem 
-{
-    [itemId: string]: ConfigItem;
-}
+
+import type { IPreset } from "@spt/models/eft/common/IGlobals";
+
 export interface ConfigItem 
 {
     [itemId: string]: {
@@ -54,48 +53,35 @@ export interface ConfigItem
             Level3: number;
         };
         addweaponpreset: boolean;
-        weaponpresets: Preset[];
+        weaponpresets: IPreset[];
         addtoHallOfFame: boolean;
         addtoSpecialSlots: boolean;
     };
-    };
+};
 
-export interface Item 
-{
-    _id: string;
-    _tpl: string;
-    parentId?: string;
-    slotId?: string;
+export interface HeadConfig {
+    path: string;
+    addHeadToPlayer: boolean;
+    side: string[];
+    locales: {
+        [key: string]: string; // This allows dynamic locale keys, such as "en", "ru", etc.
+    };
 }
-  
-export interface Preset 
-{
-    _changeWeaponName: boolean;
-    _encyclopedia?: string;
-    _id: string;
-    _items: Item[];
-    _name: string;
-    _parent: string;
-    _type: string;
-}
-  
 
 export interface VoiceConfig 
 {
     [voiceId: string]: {
-        locale: {
-            [localeId: string]: {
-                [itemId: string]: string;
-            };
+        locales: {
+            [key: string]: string; // This allows dynamic locale keys, such as "en", "ru", etc.
         };
+        name: string;
         addVoiceToPlayer: boolean;
         sideSpecificVoice: string;
+        addToBotTypes: Record<string, number>;
     };
 }
 
-// Traders and Task related items
 
-//#region Enums
 export enum traderIDs 
     {
     MECHANIC = "5a7c2eca46aef81a7ca2145d",
@@ -103,16 +89,10 @@ export enum traderIDs
     PEACEKEEPER = "5935c25fb3acc3127c3d8cd9",
     THERAPIST = "54cb57776803fa99248b456e",
     PRAPOR = "54cb50c76803fa8b248b4571",
-    JAEGER = "5c0647fdd443bc2504c2d371",
+    JAEGAR = "5c0647fdd443bc2504c2d371",
     RAGMAN = "5ac3b934156ae10c4430e83c",
     FENCE = "579dc571d53a0658a154fbec",
-    GOBLINKING = "GoblinKing",
-    CONDUCTOR = "Conductor",
-    COURIER = "Courier",
-    CROW = "Crow",
-    WOLF = "Wolf",
-    JUNKDEALER = "JunkDealer",
-    WTTDATABASE = "WTTDatabase"
+    BADGER = "bd3a8b28356d9c6509966546"
 }
 
 export enum currencyIDs 
@@ -124,38 +104,116 @@ export enum currencyIDs
     
 export enum allBotTypes 
     {
+
+    // Arena Fighters
     ARENAFIGHTER  = "arenafighter",
     ARENAFIGHTEREVENT = "arenafighterevent",
+
+    // Scavs
     ASSAULT = "assault",
-    BEAR = "bear",
-    RESHALA = "bossbully",
-    GLUHAR = "bossgluhar",
-    KILLA = "bosskilla",
-    KNIGHT = "bossknight",
-    SHTURMAN = "bosskojaniy",
-    SANITAR = "bosssanitar",
-    TAGILLA = "bosstagilla",
-    ZRYACHIY = "bosszryachiy",
+    ASSAULTGROUP = "assaultgroup",
+    MARKSMAN = "marksman",
     CRAZYASSAULTEVENT = "crazyassaultevent",
     CURSEDASSAULT = "cursedassault",
-    EXUSEC = "exusec",
-    FOLLOWERBIGPIPE = "followerbigpipe",
-    FOLLOWERBIRDEYE = "followerbirdeye",
-    FOLLOWERRESHALA = "followerbully",
-    FOLLOWERGLUHARASSAULT = "followergluharassault",
-    FOLLOWERGLUHARSCOUT = "followergluharscout",
-    FOLLOWERGLUHARSECURITY = "followergluharsecurity",
-    FOLLOWERGLUHARSNIPER = "followergluharsnipe",
-    FOLLOWERSHTURMAN = "followerkojaniy",
-    FOLLOWERSANITAR = "followersanitar",
-    FOLLOWERTAGILLA = "followertagilla",
-    FOLLOWERZRYACHIY = "followerzryachiy",
-    GIFTER = "gifter",
-    MARKSMAN = "marksman",
+
+    // PMC's
+    BEAR = "bear",
+    USEC = "usec",
+    PMCBEAR = "pmcbear",
+    PMCUSEC = "pmcusec",
     PMC = "pmcbot",
+
+    // ExUsec
+    EXUSEC = "exusec",
+
+    // Cultists
     CULTISTPRIEST = "sectantpriest",
     CULTISTWARRIOR = "sectantwarrior",
-    USEC = "usec"
+    CULTISTONI = "sectantoni",
+    CULTISTPRIESTEVENT = "sectantpriestevent",
+    CULTISTPREDVESTNIK = "sectantpredvestnik",
+    CULTISTPRIZRAK = "sectantprizrak",
+
+    // BTR
+    BTR = "btrshooter",
+
+    // Spirits
+    SPIRITSPRING = "spiritspring",
+    SPIRITWINTER = "spiritwinter",
+
+    // Zombies
+    INFECTEDASSAULT = "infectedassault",
+    INFECTEDCIVIL = "infectedcivil",
+    INFECTEDLABORANT = "infectedlaborant",
+    INFECTEDPMC = "infectedpmc",
+    INFECTEDTAGILLA = "infectedtagilla",
+
+    
+    // Santa
+    GIFTER = "gifter",
+
+    // Bosses & Followers
+
+        // Kaban
+        KABAN = "bossboar",
+        KABANSNIPER = "bossboarsniper",
+        FOLLOWERBOAR = "followerboar",
+        FOLLOWERBOARCLOSE1 = "followerboarclose1",
+        FOLLOWERBOARCLOSE2 = "followerboarclose2",
+
+        // Killa
+        KILLA = "bosskilla",
+
+        // Kolontay
+        KOLONTAY = "bosskolontay",
+        FOLLOWERKOLONTAYASSAULT = "followerkolontayassault",
+        FOLLOWERKOLONTAYSECURITY = "followerkolontaysecurity",
+
+        // Partisan
+        PARTISAN = "bosspartisan",
+
+        // Reshala
+        RESHALA = "bossbully",
+        FOLLOWERRESHALA = "followerbully",
+
+        // Gluhar
+        GLUHAR = "bossgluhar",
+        FOLLOWERGLUHARASSAULT = "followergluharassault",
+        FOLLOWERGLUHARSCOUT = "followergluharscout",
+        FOLLOWERGLUHARSECURITY = "followergluharsecurity",
+        FOLLOWERGLUHARSNIPER = "followergluharsnipe",
+
+        // Goons
+        KNIGHT = "bossknight",
+        FOLLOWERBIGPIPE = "followerbigpipe",
+        FOLLOWERBIRDEYE = "followerbirdeye",
+
+        // Shturman
+        SHTURMAN = "bosskojaniy",
+        FOLLOWERSHTURMAN = "followerkojaniy",
+
+        // Sanitar
+        SANITAR = "bosssanitar",
+        FOLLOWERSANITAR = "followersanitar",
+
+        // Tagilla
+        TAGILLA = "bosstagilla",
+        FOLLOWERTAGILLA = "followertagilla",
+
+        // Zryachiy
+        ZRYACHIY = "bosszryachiy",
+        FOLLOWERZRYACHIY = "followerzryachiy",
+        PEACEFULZRYACHIYEVENT = "peacefulzryachiyevent",
+        RAVANGEZRYACHIYEVENT = "ravengezryachiyevent",
+
+    // Traders
+
+        // Peacemaker
+        PEACEMAKER = "peacemaker",
+
+        // Skier
+        SKIER = "skier",
+
 }
 
 export enum inventorySlots 
@@ -185,8 +243,6 @@ export enum Stashes
     LEVEL4 = "5811ce772459770e9e5f9532"
 }
 
-//Interfaces
-
 export interface QuestZone 
 {
     zoneId: string;
@@ -210,6 +266,3 @@ export interface QuestZone
         z: string;
     };
 }
-
-
-//#endregion

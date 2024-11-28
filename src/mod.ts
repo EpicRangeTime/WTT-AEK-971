@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
-import { DependencyContainer } from "tsyringe";
-import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
-import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
+import type { DependencyContainer } from "tsyringe";
+import type { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import type { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
 import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 // WTT imports
 import { WTTInstanceManager } from "./WTTInstanceManager";
 import { CustomItemService } from "./CustomItemService";
-import { epicItemClass } from  "./EpicsEdits"
 import { QuestAPI } from "./QuestAPI";
+import { QuestModifier } from "./QuestModifier";
 // Custom Trader Assort Items
 import { CustomAssortSchemeService } from "./CustomAssortSchemeService";
 import { CustomWeaponPresets } from "./CustomWeaponPresets";
@@ -23,15 +23,14 @@ implements IPreSptLoadMod, IPostDBLoadMod
     private Instance: WTTInstanceManager = new WTTInstanceManager();
     private version: string;
     private modName = "WTT-AEK-971";
-    private config;
 
     private customItemService: CustomItemService = new CustomItemService();
     private questAPI: QuestAPI = new QuestAPI();
-    private epicItemClass: epicItemClass = new epicItemClass();
+    private questModifier: QuestModifier = new QuestModifier();
     private customAssortSchemeService: CustomAssortSchemeService = new CustomAssortSchemeService();
     private customWeaponPresets: CustomWeaponPresets = new CustomWeaponPresets();
 
-    debug = true;
+    debug = false;
 
     // Anything that needs done on preSptLoad, place here.
     public preSptLoad(container: DependencyContainer): void 
@@ -46,8 +45,7 @@ implements IPreSptLoadMod, IPostDBLoadMod
 
         this.customItemService.preSptLoad(this.Instance);
         this.questAPI.preSptLoad(this.Instance);
-
-        this.epicItemClass.preSptLoad(this.Instance);
+        this.questModifier.preSptLoad(this.Instance);
         this.customAssortSchemeService.preSptLoad(this.Instance);
 
         this.customWeaponPresets.preSptLoad(this.Instance);
@@ -61,11 +59,11 @@ implements IPreSptLoadMod, IPostDBLoadMod
         this.Instance.postDBLoad(container);
         // EVERYTHING AFTER HERE MUST USE THE INSTANCE
 
-        this.epicItemClass.postDBLoad();
         this.customItemService.postDBLoad();
         this.customAssortSchemeService.postDBLoad();
         this.customWeaponPresets.postDBLoad();
         this.questAPI.postDBLoad();
+        this.questModifier.postDBLoad();
 
         this.Instance.logger.log(
             `[${this.modName}] Database: Loading complete.`,
@@ -115,10 +113,9 @@ implements IPreSptLoadMod, IPostDBLoadMod
 
     private displayCreditBanner(): void 
     {
-        this.colorLog(`[${this.modName}] ----------------------------------------------------------------------------`, "green");
-        this.colorLog(`[${this.modName}] Developers:  EpicRangeTime, Tron   Code Framework: GroovypenguinX`, "green");
-        this.colorLog(`[${this.modName}] "If this gun is OP, that's because that's how it's meant to be."`, "green");
-        this.colorLog(`[${this.modName}] ---------------------------------------------------------------------------`, "green");
+        this.colorLog
+        (`[${this.modName}] Developers:  EpicRangeTime, Tron   Code Framework: GroovypenguinX
+                                                        If this gun is OP, that's because that's how it's meant to be.`, "green");
     }
 }
 
